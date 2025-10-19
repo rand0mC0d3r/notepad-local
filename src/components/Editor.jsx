@@ -104,7 +104,7 @@ const Editor = () => {
   const folderOptions = buildFolderOptions();
 
   return (
-    <Box className="editor" sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <Box className="editor" sx={{ display: 'flex', flexDirection: 'column', height: '100%', bgcolor: 'background.default' }}>
       <Box
         className="editor-header"
         sx={{
@@ -114,6 +114,7 @@ const Editor = () => {
           display: 'flex',
           gap: 2,
           alignItems: 'center',
+          bgcolor: 'background.paper',
         }}
       >
         <TextField
@@ -147,9 +148,9 @@ const Editor = () => {
         </Button>
       </Box>
       <MarkdownToolbar onFormat={handleFormat} />
-      <Box className="editor-content" sx={{ flex: 1, overflow: 'auto', p: 2 }}>
+      <Box className="editor-content" sx={{ flex: 1, overflow: 'auto', p: 2, bgcolor: 'background.default' }}>
         {showPreview ? (
-          <Box className="markdown-preview">
+          <Box className="markdown-preview" sx={{ color: 'text.primary' }}>
             <ReactMarkdown>{activeNote.content}</ReactMarkdown>
           </Box>
         ) : (

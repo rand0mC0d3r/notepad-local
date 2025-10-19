@@ -1,3 +1,4 @@
+import { Box, IconButton } from '@mui/material';
 import './MarkdownToolbar.css';
 
 const MarkdownToolbar = ({ onFormat }) => {
@@ -15,18 +16,26 @@ const MarkdownToolbar = ({ onFormat }) => {
   ];
 
   return (
-    <div className="markdown-toolbar">
+    <Box
+      className="markdown-toolbar"
+      sx={{
+        borderBottom: 1,
+        borderColor: 'divider',
+        bgcolor: 'background.paper',
+      }}
+    >
       {tools.map((tool) => (
-        <button
+        <IconButton
           key={tool.title}
-          className="toolbar-btn"
           onClick={() => onFormat(tool.format)}
           title={tool.title}
+          size="small"
+          sx={{ minWidth: 36, height: 32 }}
         >
           {tool.icon}
-        </button>
+        </IconButton>
       ))}
-    </div>
+    </Box>
   );
 };
 

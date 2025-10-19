@@ -37,6 +37,7 @@ const Sidebar = () => {
     createFolder,
     deleteFolder,
     isSidebarOpen,
+    moveNoteToFolder,
   } = useNotes();
 
   const [expandedFolders, setExpandedFolders] = useState({});
@@ -45,6 +46,8 @@ const Sidebar = () => {
     parentId: null,
   });
   const [folderName, setFolderName] = useState('');
+  const [draggedNote, setDraggedNote] = useState(null);
+  const [dragOverFolder, setDragOverFolder] = useState(null);
 
   const handleDeleteNote = (e, noteId) => {
     e.stopPropagation();
@@ -81,6 +84,46 @@ const Sidebar = () => {
     setFolderName('');
   };
 
+  // Drag and drop handlers
+  const handleDragStart = (e, noteId) => {
+    setDraggedNote(noteId);
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
+  const handleDragEnd = () => {
+    setDraggedNote(null);
+    setDragOverFolder(null);
+  };
+
+  const handleDragOver = (e, folderId) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.dataTransfer.dropEffect = 'move';
+    setDragOverFolder(folderId);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // Only clear if we're leaving the folder area
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX;
+    const y = e.clientY;
+    if (x < rect.left || x >= rect.right || y < rect.top || y >= rect.bottom) {
+      setDragOverFolder(null);
+    }
+  };
+
+  const handleDrop = (e, folderId) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (draggedNote) {
+      moveNoteToFolder(draggedNote, folderId);
+      setDraggedNote(null);
+      setDragOverFolder(null);
+    }
+  };
+
   // Recursive function to render folders and their contents
   const renderFolder = (folderId, level = 0) => {
     const subfolders = folders.filter((f) => f.parentId === folderId);
@@ -90,11 +133,17 @@ const Sidebar = () => {
     const folder = folders.find((f) => f.id === folderId);
     if (!folder) return null;
 
+    const isDragOver = dragOverFolder === folderId;
+
     return (
       <Box key={folderId}>
         <ListItem
           disablePadding
-          sx={{ pl: level * 2 }}
+          sx={{ 
+            pl: level * 2,
+            bgcolor: isDragOver ? 'action.hover' : 'transparent',
+            transition: 'background-color 0.2s'
+          }}
           secondaryAction={
             <Box>
               <IconButton
@@ -116,6 +165,9 @@ const Sidebar = () => {
               </IconButton>
             </Box>
           }
+          onDragOver={(e) => handleDragOver(e, folderId)}
+          onDragLeave={handleDragLeave}
+          onDrop={(e) => handleDrop(e, folderId)}
         >
           <ListItemButton onClick={() => toggleFolder(folderId)}>
             {isExpanded ? <ExpandMoreIcon /> : <ChevronRightIcon />}
@@ -131,7 +183,14 @@ const Sidebar = () => {
               <ListItem
                 key={note.id}
                 disablePadding
-                sx={{ pl: (level + 1) * 2 }}
+                sx={{ 
+                  pl: (level + 1) * 2,
+                  cursor: 'grab',
+                  '&:active': {
+                    cursor: 'grabbing'
+                  },
+                  opacity: draggedNote === note.id ? 0.5 : 1
+                }}
                 secondaryAction={
                   <IconButton
                     size="small"
@@ -141,6 +200,9 @@ const Sidebar = () => {
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                 }
+                draggable
+                onDragStart={(e) => handleDragStart(e, note.id)}
+                onDragEnd={handleDragEnd}
               >
                 <ListItemButton
                   selected={note.id === activeNoteId}
@@ -223,6 +285,16 @@ const Sidebar = () => {
                 <DeleteIcon fontSize="small" />
               </IconButton>
             }
+            draggable
+            onDragStart={(e) => handleDragStart(e, note.id)}
+            onDragEnd={handleDragEnd}
+            sx={{
+              cursor: 'grab',
+              '&:active': {
+                cursor: 'grabbing'
+              },
+              opacity: draggedNote === note.id ? 0.5 : 1
+            }}
           >
             <ListItemButton
               selected={note.id === activeNoteId}
