@@ -2,6 +2,12 @@
 
 A modern, feature-rich markdown notepad application built with Vite, React, and Context API. Write, organize, and manage your notes with full markdown support, all stored locally in your browser.
 
+## 🚀 Live Demo
+
+**[Try the live demo here!](https://rand0mc0d3r.github.io/notepad-local/)**
+
+Experience all the features without any installation - just click the link above and start taking notes immediately!
+
 ## ✨ Features
 
 - **🎨 Markdown Support**: Write notes with full markdown syntax support
@@ -127,6 +133,19 @@ notepad-local/
 ## 🔒 Privacy
 
 All notes are stored locally in your browser's localStorage. No data is sent to any server. Your notes stay on your device.
+
+## 🚀 Deployment
+
+This project is configured with GitHub Actions for automatic deployment to GitHub Pages. Every push to the main branch will:
+
+1. Build the application
+2. Deploy it to GitHub Pages
+3. Update the live demo automatically
+
+The deployment workflow uses:
+- **Build**: Vite build process
+- **Deploy**: GitHub Pages with proper base path configuration
+- **CI/CD**: Automatic deployment on push to main branch
 
 ## 🤝 Contributing
 
