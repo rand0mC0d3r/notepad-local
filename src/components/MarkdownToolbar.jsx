@@ -6,6 +6,7 @@ const MarkdownToolbar = ({ onFormat }) => {
     { icon: 'B', title: 'Bold', format: (text) => `**${text}**` },
     { icon: 'I', title: 'Italic', format: (text) => `*${text}*` },
     { icon: 'H', title: 'Heading', format: (text) => `# ${text}` },
+    { icon: '---', title: 'Separator', format: () => `---` },
     { icon: '🔗', title: 'Link', format: (text) => `[${text}](url)` },
     { icon: '📷', title: 'Image', format: (text) => `![alt](${text})` },
     { icon: '•', title: 'List', format: (text) => `- ${text}` },

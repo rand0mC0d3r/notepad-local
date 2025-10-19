@@ -108,7 +108,8 @@ const Editor = () => {
       <Box
         className="editor-header"
         sx={{
-          p: 2,
+          px: 2,
+          height: 64,
           borderBottom: 1,
           borderColor: 'divider',
           display: 'flex',

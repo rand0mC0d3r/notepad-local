@@ -240,7 +240,8 @@ const Sidebar = () => {
     >
       <Box
         sx={{
-          p: 2,
+          px: 2,
+          height: 64,
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
