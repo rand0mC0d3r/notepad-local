@@ -1,3 +1,4 @@
+import { ThemeProvider } from './context/ThemeContext';
 import { NotesProvider } from './context/NotesContext';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
@@ -6,15 +7,17 @@ import './App.css';
 
 function App() {
   return (
-    <NotesProvider>
-      <div className="app">
-        <Header />
-        <div className="app-body">
-          <Sidebar />
-          <Editor />
+    <ThemeProvider>
+      <NotesProvider>
+        <div className="app">
+          <Header />
+          <div className="app-body">
+            <Sidebar />
+            <Editor />
+          </div>
         </div>
-      </div>
-    </NotesProvider>
+      </NotesProvider>
+    </ThemeProvider>
   );
 }
 

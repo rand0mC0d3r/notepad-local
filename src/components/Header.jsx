@@ -1,10 +1,20 @@
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { useNotes } from '../hooks/useNotes';
+import { useTheme } from '../hooks/useTheme';
+import { Box, IconButton, Typography } from '@mui/material';
+import {
+  Menu as MenuIcon,
+  Download as DownloadIcon,
+  Upload as UploadIcon,
+  LightMode as LightModeIcon,
+  DarkMode as DarkModeIcon,
+} from '@mui/icons-material';
 import './Header.css';
 
 const Header = () => {
   const { notes, setNotes, toggleSidebar } = useNotes();
+  const { mode, toggleTheme } = useTheme();
 
   const handleDownloadZip = async () => {
     if (notes.length === 0) {
@@ -66,28 +76,44 @@ const Header = () => {
   };
 
   return (
-    <header className="app-header">
-      <div className="header-left">
-        <button className="btn-hamburger" onClick={toggleSidebar} title="Toggle sidebar">
-          ☰
-        </button>
-        <h1>📝 Notepad Local</h1>
-      </div>
-      <div className="header-right">
-        <button className="btn-header" onClick={handleDownloadZip} title="Download all notes as ZIP">
-          ⬇️ Export
-        </button>
-        <label className="btn-header" title="Upload ZIP to restore notes">
-          ⬆️ Import
+    <Box
+      className="app-header"
+      sx={{
+        bgcolor: 'background.paper',
+        borderBottom: 1,
+        borderColor: 'divider',
+        p: 1.5,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}
+    >
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <IconButton onClick={toggleSidebar} title="Toggle sidebar">
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" component="h1">
+          📝 Notepad Local
+        </Typography>
+      </Box>
+      <Box sx={{ display: 'flex', gap: 1 }}>
+        <IconButton onClick={toggleTheme} title={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`}>
+          {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+        </IconButton>
+        <IconButton onClick={handleDownloadZip} title="Download all notes as ZIP">
+          <DownloadIcon />
+        </IconButton>
+        <IconButton component="label" title="Upload ZIP to restore notes">
+          <UploadIcon />
           <input
             type="file"
             accept=".zip"
             onChange={handleUploadZip}
             style={{ display: 'none' }}
           />
-        </label>
-      </div>
-    </header>
+        </IconButton>
+      </Box>
+    </Box>
   );
 };
 
