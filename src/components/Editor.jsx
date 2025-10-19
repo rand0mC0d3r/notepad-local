@@ -109,7 +109,7 @@ const Editor = () => {
         className="editor-header"
         sx={{
           px: 2,
-          height: 64,
+          minHeight: 64,
           borderBottom: 1,
           borderColor: 'divider',
           display: 'flex',
