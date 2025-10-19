@@ -6,12 +6,15 @@ export const NotesContext = createContext();
 
 export const NotesProvider = ({ children }) => {
   const [notes, setNotes] = useState([]);
+  const [folders, setFolders] = useState([]);
   const [activeNoteId, setActiveNoteId] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-  // Load notes from localStorage on mount
+  // Load notes and folders from localStorage on mount
   useEffect(() => {
     const savedNotes = localStorage.getItem('notepad-notes');
+    const savedFolders = localStorage.getItem('notepad-folders');
+    
     if (savedNotes) {
       const parsedNotes = JSON.parse(savedNotes);
       setNotes(parsedNotes);
@@ -26,9 +29,14 @@ export const NotesProvider = ({ children }) => {
         content: '# Welcome to Notepad Local\n\nStart writing your notes here!',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
+        folderId: null, // Root folder
       };
       setNotes([defaultNote]);
       setActiveNoteId(defaultNote.id);
+    }
+
+    if (savedFolders) {
+      setFolders(JSON.parse(savedFolders));
     }
   }, []);
 
@@ -39,13 +47,19 @@ export const NotesProvider = ({ children }) => {
     }
   }, [notes]);
 
-  const createNote = () => {
+  // Save folders to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('notepad-folders', JSON.stringify(folders));
+  }, [folders]);
+
+  const createNote = (folderId = null) => {
     const newNote = {
       id: uuidv4(),
       title: 'Untitled',
       content: '',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
+      folderId,
     };
     setNotes([...notes, newNote]);
     setActiveNoteId(newNote.id);
@@ -74,6 +88,44 @@ export const NotesProvider = ({ children }) => {
     }
   };
 
+  const createFolder = (name, parentId = null) => {
+    const newFolder = {
+      id: uuidv4(),
+      name,
+      parentId,
+      createdAt: new Date().toISOString(),
+    };
+    setFolders([...folders, newFolder]);
+    return newFolder;
+  };
+
+  const deleteFolder = (id) => {
+    // Check if folder has any notes
+    const hasNotes = notes.some(note => note.folderId === id);
+    if (hasNotes) {
+      return false; // Cannot delete folder with notes
+    }
+    
+    // Check if folder has any subfolders
+    const hasSubfolders = folders.some(folder => folder.parentId === id);
+    if (hasSubfolders) {
+      return false; // Cannot delete folder with subfolders
+    }
+    
+    setFolders(folders.filter(folder => folder.id !== id));
+    return true;
+  };
+
+  const renameFolder = (id, newName) => {
+    setFolders(folders.map(folder =>
+      folder.id === id ? { ...folder, name: newName } : folder
+    ));
+  };
+
+  const moveNoteToFolder = (noteId, folderId) => {
+    updateNote(noteId, { folderId });
+  };
+
   const getActiveNote = () => {
     return notes.find(note => note.id === activeNoteId);
   };
@@ -86,11 +138,16 @@ export const NotesProvider = ({ children }) => {
     <NotesContext.Provider
       value={{
         notes,
+        folders,
         activeNoteId,
         setActiveNoteId,
         createNote,
         updateNote,
         deleteNote,
+        createFolder,
+        deleteFolder,
+        renameFolder,
+        moveNoteToFolder,
         getActiveNote,
         setNotes,
         isSidebarOpen,
