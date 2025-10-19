@@ -93,7 +93,7 @@ const Header = () => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" component="h1">
-          📝 Notepad Local
+          📝 NotePadie
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', gap: 1 }}>

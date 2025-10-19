@@ -1,33 +1,7 @@
+/* MarkdownToolbar.css is now minimal as MUI handles most styling */
 .markdown-toolbar {
   display: flex;
   gap: 4px;
   padding: 8px;
-  background: #252525;
-  border-bottom: 1px solid #444;
   flex-wrap: wrap;
-}
-
-.toolbar-btn {
-  background: #3d3d3d;
-  color: #fff;
-  border: 1px solid #555;
-  border-radius: 4px;
-  padding: 6px 12px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s;
-  min-width: 36px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.toolbar-btn:hover {
-  background: #4d4d4d;
-  border-color: #007acc;
-}
-
-.toolbar-btn:active {
-  background: #005a9e;
 }

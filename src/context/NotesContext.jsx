@@ -26,7 +26,7 @@ export const NotesProvider = ({ children }) => {
       const defaultNote = {
         id: uuidv4(),
         title: 'Welcome',
-        content: '# Welcome to Notepad Local\n\nStart writing your notes here!',
+        content: '# Welcome to NotePadie\n\nStart writing your notes here!',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         folderId: null, // Root folder
