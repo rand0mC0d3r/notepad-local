@@ -4,7 +4,7 @@ import { useNotes } from '../hooks/useNotes';
 import './Header.css';
 
 const Header = () => {
-  const { notes, setNotes } = useNotes();
+  const { notes, setNotes, toggleSidebar } = useNotes();
 
   const handleDownloadZip = async () => {
     if (notes.length === 0) {
@@ -68,6 +68,9 @@ const Header = () => {
   return (
     <header className="app-header">
       <div className="header-left">
+        <button className="btn-hamburger" onClick={toggleSidebar} title="Toggle sidebar">
+          ☰
+        </button>
         <h1>📝 Notepad Local</h1>
       </div>
       <div className="header-right">
