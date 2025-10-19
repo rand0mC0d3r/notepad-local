@@ -230,7 +230,6 @@ const Sidebar = () => {
     <Box
       className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}
       sx={{
-        width: 280,
         bgcolor: 'background.paper',
         borderRight: 1,
         borderColor: 'divider',

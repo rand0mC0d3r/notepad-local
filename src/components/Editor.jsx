@@ -128,7 +128,7 @@ const Editor = () => {
             size="small"
           />
           <FormControl size="small" sx={{ minWidth: 200 }}>
-            <InputLabel>Folder</InputLabel>
+            <InputLabel>📂 Folder</InputLabel>
             <Select
               value={activeNote.folderId || 'root'}
               label="Folder"
