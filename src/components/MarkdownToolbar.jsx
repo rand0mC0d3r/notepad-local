@@ -16,9 +16,9 @@ const MarkdownToolbar = ({ onFormat }) => {
 
   return (
     <div className="markdown-toolbar">
-      {tools.map((tool, index) => (
+      {tools.map((tool) => (
         <button
-          key={index}
+          key={tool.title}
           className="toolbar-btn"
           onClick={() => onFormat(tool.format)}
           title={tool.title}

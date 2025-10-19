@@ -19,7 +19,11 @@ const Header = () => {
     
     // Add each note as a markdown file
     notes.forEach((note, index) => {
-      const filename = `${index + 1}-${note.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.md`;
+      const sanitizedTitle = note.title
+        .replace(/[^a-z0-9\-_\s]/gi, '')
+        .replace(/\s+/g, '_')
+        .toLowerCase();
+      const filename = `${index + 1}-${sanitizedTitle}.md`;
       const content = `# ${note.title}\n\n${note.content}`;
       zip.file(filename, content);
     });
