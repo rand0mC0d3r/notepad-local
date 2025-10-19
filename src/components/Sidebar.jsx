@@ -1,29 +1,29 @@
-import { useState } from 'react';
-import { useNotes } from '../hooks/useNotes';
+import {
+  Add as AddIcon,
+  ChevronRight as ChevronRightIcon,
+  CreateNewFolder as CreateNewFolderIcon,
+  Delete as DeleteIcon,
+  ExpandMore as ExpandMoreIcon,
+  InsertDriveFile as FileIcon,
+} from '@mui/icons-material';
 import {
   Box,
+  Button,
+  Collapse,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   IconButton,
-  Typography,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
-  Collapse,
   TextField,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
+  Typography,
 } from '@mui/material';
-import {
-  Add as AddIcon,
-  Delete as DeleteIcon,
-  ExpandMore as ExpandMoreIcon,
-  ChevronRight as ChevronRightIcon,
-  CreateNewFolder as CreateNewFolderIcon,
-  InsertDriveFile as FileIcon,
-} from '@mui/icons-material';
+import { useState } from 'react';
+import { useNotes } from '../hooks/useNotes';
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -139,7 +139,7 @@ const Sidebar = () => {
       <Box key={folderId}>
         <ListItem
           disablePadding
-          sx={{ 
+          sx={{
             pl: level * 2,
             bgcolor: isDragOver ? 'action.hover' : 'transparent',
             transition: 'background-color 0.2s'
@@ -183,7 +183,7 @@ const Sidebar = () => {
               <ListItem
                 key={note.id}
                 disablePadding
-                sx={{ 
+                sx={{
                   pl: (level + 1) * 2,
                   cursor: 'grab',
                   '&:active': {

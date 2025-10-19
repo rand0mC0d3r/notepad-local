@@ -1,18 +1,18 @@
-import { useState, useRef, useEffect } from 'react';
-import ReactMarkdown from 'react-markdown';
-import { useNotes } from '../hooks/useNotes';
-import MarkdownToolbar from './MarkdownToolbar';
 import {
   Box,
-  TextField,
   Button,
-  Select,
-  MenuItem,
   FormControl,
   InputLabel,
+  MenuItem,
+  Select,
+  TextField,
   Typography,
 } from '@mui/material';
+import { useEffect, useRef, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import { useNotes } from '../hooks/useNotes';
 import './Editor.css';
+import MarkdownToolbar from './MarkdownToolbar';
 
 const Editor = () => {
   const { getActiveNote, updateNote, folders, moveNoteToFolder } = useNotes();
@@ -85,18 +85,18 @@ const Editor = () => {
   // Build folder options with hierarchy
   const buildFolderOptions = () => {
     const options = [{ id: 'root', name: 'Root', level: 0 }];
-    
+
     const addFolderWithChildren = (parentId, level) => {
       const children = folders
         .filter(f => f.parentId === parentId)
         .sort((a, b) => a.name.localeCompare(b.name));
-      
+
       children.forEach(folder => {
         options.push({ id: folder.id, name: folder.name, level });
         addFolderWithChildren(folder.id, level + 1);
       });
     };
-    
+
     addFolderWithChildren(null, 1);
     return options;
   };
@@ -113,36 +113,39 @@ const Editor = () => {
           borderColor: 'divider',
           display: 'flex',
           gap: 2,
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
           alignItems: 'center',
           bgcolor: 'background.paper',
         }}
       >
-        <TextField
-          fullWidth
-          variant="outlined"
-          value={activeNote.title}
-          onChange={handleTitleChange}
-          placeholder="Note title"
-          size="small"
-        />
-        <FormControl size="small" sx={{ minWidth: 200 }}>
-          <InputLabel>Folder</InputLabel>
-          <Select
-            value={activeNote.folderId || 'root'}
-            label="Folder"
-            onChange={handleFolderChange}
-          >
-            {folderOptions.map(option => (
-              <MenuItem key={option.id} value={option.id}>
-                {'\u00A0'.repeat(option.level * 4)}{option.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <Box sx={{ gap: 1, flexWrap: 'wrap'}} display="flex" alignItems="center">
+          <TextField
+            variant="outlined"
+            value={activeNote.title}
+            onChange={handleTitleChange}
+            placeholder="Note title"
+            size="small"
+          />
+          <FormControl size="small" sx={{ minWidth: 200 }}>
+            <InputLabel>Folder</InputLabel>
+            <Select
+              value={activeNote.folderId || 'root'}
+              label="Folder"
+              onChange={handleFolderChange}
+            >
+              {folderOptions.map(option => (
+                <MenuItem key={option.id} value={option.id}>
+                  {'\u00A0'.repeat(option.level * 4)}{option.name}
+                </MenuItem>
+              ))}
+            </Select>
+            </FormControl>
+        </Box>
         <Button
           variant={showPreview ? 'contained' : 'outlined'}
           onClick={() => setShowPreview(!showPreview)}
-          sx={{ minWidth: 100 }}
+          sx={{ minWidth: 100, textTransform: 'none', textWrap: 'nowrap' }}
         >
           {showPreview ? '✏️ Edit' : '👁️ Preview'}
         </Button>
