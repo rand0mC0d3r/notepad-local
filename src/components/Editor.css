@@ -6,6 +6,13 @@
   overflow: hidden;
 }
 
+/* Mobile: editor takes full width */
+@media (max-width: 768px) {
+  .editor {
+    width: 100%;
+  }
+}
+
 .no-note-selected {
   display: flex;
   align-items: center;

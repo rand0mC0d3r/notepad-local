@@ -2,7 +2,7 @@ import { useNotes } from '../hooks/useNotes';
 import './Sidebar.css';
 
 const Sidebar = () => {
-  const { notes, activeNoteId, setActiveNoteId, createNote, deleteNote } = useNotes();
+  const { notes, activeNoteId, setActiveNoteId, createNote, deleteNote, isSidebarOpen } = useNotes();
 
   const handleDeleteNote = (e, noteId) => {
     e.stopPropagation();
@@ -12,7 +12,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}>
       <div className="sidebar-header">
         <h2>Notes</h2>
         <button className="btn-new" onClick={createNote} title="Create new note">

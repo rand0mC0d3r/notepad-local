@@ -7,6 +7,7 @@ export const NotesContext = createContext();
 export const NotesProvider = ({ children }) => {
   const [notes, setNotes] = useState([]);
   const [activeNoteId, setActiveNoteId] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   // Load notes from localStorage on mount
   useEffect(() => {
@@ -77,6 +78,10 @@ export const NotesProvider = ({ children }) => {
     return notes.find(note => note.id === activeNoteId);
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <NotesContext.Provider
       value={{
@@ -88,6 +93,8 @@ export const NotesProvider = ({ children }) => {
         deleteNote,
         getActiveNote,
         setNotes,
+        isSidebarOpen,
+        toggleSidebar,
       }}
     >
       {children}

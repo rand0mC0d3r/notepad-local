@@ -7,10 +7,39 @@
   border-bottom: 1px solid #444;
 }
 
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .header-left h1 {
   margin: 0;
   font-size: 20px;
   color: #fff;
+}
+
+.btn-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px 8px;
+  line-height: 1;
+  transition: background 0.2s;
+  border-radius: 4px;
+}
+
+.btn-hamburger:hover {
+  background: #3d3d3d;
+}
+
+@media (max-width: 768px) {
+  .btn-hamburger {
+    display: block;
+  }
 }
 
 .header-right {
