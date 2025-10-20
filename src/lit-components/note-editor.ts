@@ -176,7 +176,7 @@ export class NoteEditor extends SignalWatcher(LitElement) {
     moveNoteToFolder(note.id, newFolderId);
   }
 
-  private handleFormat(formatFn: FormatFunction) {
+  private handleFormat(formatFn: FormatFunction): void {
     const note = activeNote.value;
     const textarea = this.textarea;
     if (!note || !textarea) return;

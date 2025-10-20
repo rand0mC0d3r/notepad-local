@@ -2,7 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { themeStyles, baseStyles } from '../styles/theme';
 
-export type FormatFunction = (text: string) => string;
+export type FormatFunction = (_text: string) => string;
 
 interface Tool {
   icon: string;
@@ -12,7 +12,7 @@ interface Tool {
 
 @customElement('markdown-toolbar')
 export class MarkdownToolbar extends LitElement {
-  @property({ type: Object }) onFormat?: (formatFn: FormatFunction) => void;
+  @property({ type: Object }) onFormat?: (_formatFn: FormatFunction) => void;
 
   static styles = [
     themeStyles,
