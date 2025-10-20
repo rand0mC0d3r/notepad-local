@@ -1,7 +1,0 @@
-/* MarkdownToolbar.css is now minimal as MUI handles most styling */
-.markdown-toolbar {
-  display: flex;
-  gap: 4px;
-  padding: 8px;
-  flex-wrap: wrap;
-}

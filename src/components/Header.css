@@ -1,6 +1,0 @@
-/* Header.css is now minimal as MUI handles most styling */
-@media (max-width: 768px) {
-  .app-header {
-    padding: 8px 12px !important;
-  }
-}
