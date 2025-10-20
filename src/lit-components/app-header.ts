@@ -115,6 +115,8 @@ export class AppHeader extends SignalWatcher(LitElement) {
 
   render() {
     const mode = themeMode.value;
+    this.classList.remove('light', 'dark');
+    this.classList.add(mode);
     
     return html`
       <div class="left-section">

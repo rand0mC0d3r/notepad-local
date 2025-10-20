@@ -60,6 +60,8 @@ export class AppRoot extends SignalWatcher(LitElement) {
   }
 
   render() {
+    // Reference theme signal to trigger updates on theme change
+    const _mode = themeMode.value;
     const sidebarOpen = isSidebarOpen.value;
 
     return html`

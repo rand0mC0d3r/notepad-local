@@ -1,5 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { SignalWatcher } from '@lit-labs/preact-signals';
+import { themeMode } from '../store/theme';
 import { themeStyles, baseStyles } from '../styles/theme';
 
 export type FormatFunction = (_text: string) => string;
@@ -11,7 +13,7 @@ interface Tool {
 }
 
 @customElement('markdown-toolbar')
-export class MarkdownToolbar extends LitElement {
+export class MarkdownToolbar extends SignalWatcher(LitElement) {
   @property({ type: Object }) onFormat?: (_formatFn: FormatFunction) => void;
 
   static styles = [
@@ -51,6 +53,11 @@ export class MarkdownToolbar extends LitElement {
   ];
 
   render() {
+    // Reference theme signal to trigger updates
+    const mode = themeMode.value;
+    this.classList.remove('light', 'dark');
+    this.classList.add(mode);
+    
     return html`
       ${this.tools.map(tool => html`
         <button

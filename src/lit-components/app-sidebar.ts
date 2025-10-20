@@ -12,6 +12,7 @@ import {
   deleteFolder,
   moveNoteToFolder
 } from '../store/notes';
+import { themeMode } from '../store/theme';
 import { themeStyles, baseStyles } from '../styles/theme';
 import type { Folder } from '../store/notes';
 
@@ -257,6 +258,13 @@ export class AppSidebar extends SignalWatcher(LitElement) {
     }
   }
 
+  updated() {
+    // Apply theme class to host
+    const mode = themeMode.value;
+    this.classList.remove('light', 'dark');
+    this.classList.add(mode);
+  }
+
   private renderFolder(folder: Folder, level: number = 0) {
     const allFolders = folders.value;
     const allNotes = notes.value;
@@ -336,6 +344,8 @@ export class AppSidebar extends SignalWatcher(LitElement) {
   }
 
   render() {
+    // Reference theme signal to trigger updates on theme change
+    const _mode = themeMode.value;
     const allFolders = folders.value;
     const allNotes = notes.value;
     const rootFolders = allFolders.filter(f => f.parentId === null);

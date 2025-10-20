@@ -4,6 +4,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { SignalWatcher } from '@lit-labs/preact-signals';
 import { marked } from 'marked';
 import { activeNote, updateNote, folders, moveNoteToFolder } from '../store/notes';
+import { themeMode } from '../store/theme';
 import { themeStyles, baseStyles } from '../styles/theme';
 import type { FormatFunction } from './markdown-toolbar';
 import './markdown-toolbar';
@@ -222,7 +223,16 @@ export class NoteEditor extends SignalWatcher(LitElement) {
     return options;
   }
 
+  updated() {
+    // Apply theme class to host
+    const mode = themeMode.value;
+    this.classList.remove('light', 'dark');
+    this.classList.add(mode);
+  }
+
   render() {
+    // Reference theme signal to trigger updates on theme change
+    const _mode = themeMode.value;
     const note = activeNote.value;
 
     if (!note) {
